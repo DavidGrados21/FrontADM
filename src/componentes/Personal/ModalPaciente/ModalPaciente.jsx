@@ -11,8 +11,9 @@ export default function ModalPaciente({
   const [form, setForm] = useState({
     dni: "",
     nombre: "",
-    sexo: "M",
+    sexo: "",
     fecha_nacimiento: "",
+    origen : "",
   });
 
   const [errors, setErrors] = useState({});
@@ -32,6 +33,7 @@ export default function ModalPaciente({
         nombre: "",
         sexo: "M",
         fecha_nacimiento: "",
+        origen : "",
       });
 
       setErrors({});
@@ -206,6 +208,7 @@ export default function ModalPaciente({
         sexo: form.sexo,
         fecha_nacimiento:
           fechaFormateada,
+        origen : form.origen,
       });
 
       onSave();
@@ -273,6 +276,8 @@ export default function ModalPaciente({
           </small>
         )}
 
+        <label>FECHA NACIMIENTO</label>
+
         {/* FECHA NACIMIENTO */}
         <input
           type="date"
@@ -286,6 +291,8 @@ export default function ModalPaciente({
             {errors.fecha_nacimiento}
           </small>
         )}
+
+        <label>SEXO </label>
 
         {/* SEXO */}
         <select
@@ -305,6 +312,37 @@ export default function ModalPaciente({
         {errors.sexo && (
           <small className="modal-paciente-error">
             {errors.sexo}
+          </small>
+        )}
+
+        <label>ORIGEN </label>
+
+        {/* ORIGEN */}
+        <select
+          name="origen"
+          value={form.origen}
+          onChange={handleChange}
+        >
+          <option value="Presencial">
+            Presencial
+          </option>
+
+          <option value="Pre-arribo">
+            Pre-arribo
+          </option>
+
+          <option value="Referencia">
+            Referencia
+          </option>
+
+          <option value="Ambulancia / SAMU">
+            Ambulancia / SAMU
+          </option>
+        </select>
+
+        {errors.origen && (
+          <small className="modal-paciente-error">
+            {errors.origen}
           </small>
         )}
 
