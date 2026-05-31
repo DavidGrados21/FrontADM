@@ -1,0 +1,166 @@
+Dolor de cabeza
+Dolor de cuello
+Dolor de espalda
+Dolor de pecho
+Dolor abdominal
+Dolor de garganta
+Dolor muscular
+Dolor en las piernas
+Dolor en los brazos
+Dolor en las articulaciones
+Dolor lumbar
+Dolor de oído
+Dolor dental
+Dolor ocular
+Dolor al respirar
+Dolor al tragar
+Dolor al orinar
+Dolor de cadera
+Dolor de rodilla
+Dolor de tobillo
+Dolor de muñeca
+Dolor de hombro
+Dolor en el pecho al toser
+Fiebre
+Escalofríos
+Sudoración excesiva
+Fatiga
+Cansancio extremo
+Debilidad
+Mareo
+Vértigo
+Desmayo
+Náuseas
+Vómitos
+Diarrea
+Estreñimiento
+Acidez estomacal
+Indigestión
+Pérdida de apetito
+Aumento de apetito
+Pérdida de peso
+Aumento de peso
+Sed excesiva
+Hambre constante
+Tos seca
+Tos con flema
+Congestión nasal
+Secreción nasal
+Estornudos
+Dificultad para respirar
+Falta de aire
+Respiración rápida
+Silbidos al respirar
+Ronquera
+Pérdida de voz
+Picazón en la garganta
+Ojos llorosos
+Ojos rojos
+Visión borrosa
+Sensibilidad a la luz
+Zumbido en los oídos
+Pérdida auditiva
+Palpitaciones
+Presión arterial alta
+Presión arterial baja
+Entumecimiento
+Hormigueo
+Temblores
+Convulsiones
+Espasmos musculares
+Rigidez muscular
+Incapacidad para dormir
+Insomnio
+Somnolencia
+Pesadillas
+Ansiedad
+Estrés
+Irritabilidad
+Cambios de humor
+Tristeza
+Confusión
+Problemas de memoria
+Dificultad para concentrarse
+Desorientación
+Pánico
+Alucinaciones
+Erupción cutánea
+Picazón
+Piel seca
+Piel enrojecida
+Moretones
+Hinchazón
+Inflamación
+Sangrado nasal
+Sangrado de encías
+Sudor frío
+Caída del cabello
+Uñas quebradizas
+Labios secos
+Mal aliento
+Mal sabor de boca
+Lengua blanca
+Ganglios inflamados
+Falta de energía
+Sensación de frío
+Sensación de calor
+Escalofríos nocturnos
+Dolor al caminar
+Dificultad para moverse
+Rigidez en el cuello
+Pérdida de equilibrio
+Incontinencia urinaria
+Orina frecuente
+Orina oscura
+Ardor al orinar
+Sangre en la orina
+Dolor menstrual
+Sangrado abundante
+Picazón en la piel
+Piel amarillenta
+Coloración azulada
+Dificultad para hablar
+Dolor al masticar
+Pérdida del olfato
+Pérdida del gusto
+Hipo frecuente
+Gases
+Distensión abdominal
+Sensación de desmayo
+Latidos irregulares
+Opresión en el pecho
+Dolor punzante
+Dolor ardiente
+Sensación de pinchazos
+Falta de coordinación
+Rigidez en las articulaciones
+Debilidad en las piernas
+Debilidad en los brazos
+Dolor facial
+Presión en la cabeza
+Migraña
+Tensión muscular
+Cólicos
+Calambres
+Sensación de quemazón
+Dolor crónico
+Dolor agudo
+Sensación de vacío
+Tos persistente
+Respiración superficial
+Dolor al sentarse
+Dolor al levantarse
+Sarpullido
+Ampollas
+Pérdida de sensibilidad
+Dificultad para dormir
+Despertarse frecuentemente
+Sueño excesivo
+Pérdida de conciencia
+Mucosidad excesiva
+Dolor en los dedos
+Inflamación en los pies
+Inflamación en las manos
+Sensación de presión
+Cuerpo cortado
+Agotamiento

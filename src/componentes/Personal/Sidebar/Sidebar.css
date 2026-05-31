@@ -1,0 +1,132 @@
+/* ===== CONTENEDOR PRIVADO ===== */
+.sidebar-container {
+  position: relative;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar-container .sidebar {
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e293b, #0f172a);
+  color: #f1f5f9;
+  padding: 24px 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar-container .sidebar nav {
+  margin-top: 30px;
+}
+
+/* ===== BOTONES DEL SIDEBAR ===== */
+.sidebar-container .sidebar-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  margin: 8px 0;
+  color: #e2e8f0;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.sidebar-container .sidebar-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+/* Estado activo */
+.sidebar-container .sidebar-btn.active {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 500;
+}
+
+.sidebar-container .sidebar-btn i {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* ===== BOTÓN MENÚ ===== */
+.sidebar-container .menu-toggle {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #1e293b;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 6px;
+  z-index: 1100;
+  cursor: pointer;
+}
+
+/* ===== OVERLAY ===== */
+.sidebar-container .overlay {
+  display: none;
+}
+
+/* ===== CONTENIDO ===== */
+.cp-wrapper {
+  margin-left: 350px;
+  padding: 40px;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.patients-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.patients h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e293b;
+}
+
+/* ===== LOGO ===== */
+.sidebar-container .sidebar-logo {
+  width: 180px;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+  .sidebar-container .menu-toggle {
+    display: block;
+  }
+
+  .sidebar-container .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-container .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-container .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 900;
+  }
+}

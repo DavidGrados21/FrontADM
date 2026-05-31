@@ -1,0 +1,94 @@
+.er-expanded-row td {
+  padding: 20px;
+  background: #f9f9f9;
+  text-align: left;
+  vertical-align: top;
+}
+
+.er-expanded-content {
+  width: 100%;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+
+.er-columns {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+/* ===== SECCIONES ===== */
+
+.er-section {
+  flex: 1;
+  text-align: left;
+}
+
+.er-section h3 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+/* ===== GRID DE DATOS ===== */
+
+.er-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.er-grid p {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+  text-align: left;
+}
+
+.er-grid strong {
+  color: #111;
+}
+
+/* ===== ACCIONES ===== */
+
+.er-actions {
+  max-width: 150px;
+  text-align: left;
+}
+
+.er-edit-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #1976d2;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.er-edit-btn:hover {
+  background: #1565c0;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+
+  .er-columns {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .er-actions {
+    max-width: 100%;
+  }
+
+}

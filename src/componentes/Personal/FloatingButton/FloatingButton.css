@@ -1,0 +1,70 @@
+.floating-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  background-color: #1976d2;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  z-index: 9999;
+
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.floating-icon {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+/* 💻 Hover solo en desktop */
+.floating-button:hover {
+  transform: scale(1.08);
+  background-color: #125aa0;
+}
+
+.floating-button:active {
+  transform: scale(0.95);
+}
+
+/* 📱 RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+  .floating-button {
+    width: 52px;
+    height: 52px;
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .floating-icon {
+    width: 65%;
+    height: 65%;
+  }
+}
+
+/* 📱 teléfonos pequeños */
+@media (max-width: 480px) {
+  .floating-button {
+    width: 48px;
+    height: 48px;
+    bottom: 14px;
+    right: 14px;
+  }
+
+  .floating-icon {
+    width: 70%;
+    height: 70%;
+  }
+}

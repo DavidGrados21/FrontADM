@@ -1,0 +1,282 @@
+/* =========================
+   OVERLAY
+========================= */
+.modal-paciente-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    backdrop-filter: blur(4px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal-paciente-content {
+    width: 430px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 32px;
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.06);
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    animation: modalPacienteFadeIn 0.22s ease;
+
+    border: 1px solid #e5e7eb;
+}
+
+/* =========================
+   TITULO
+========================= */
+.modal-paciente-content h3 {
+    margin: 0 0 8px 0;
+
+    text-align: center;
+
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+
+    color: #0f172a;
+}
+
+/* =========================
+   INPUTS + SELECT
+========================= */
+.modal-paciente-content input,
+.modal-paciente-content select {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border-radius: 12px;
+
+    border: 1px solid #dbe2ea;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+    box-sizing: border-box;
+}
+
+/* FOCUS */
+.modal-paciente-content input:focus,
+.modal-paciente-content select:focus {
+    border-color: #2563eb;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* INPUT DESHABILITADO */
+.modal-paciente-content input:disabled {
+    background: #eef2f7;
+    color: #475569;
+    cursor: not-allowed;
+}
+
+/* SELECT */
+.modal-paciente-content select {
+    cursor: pointer;
+}
+
+/* =========================
+   ERRORES
+========================= */
+.modal-paciente-error {
+    margin-top: -6px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #dc2626;
+}
+
+/* =========================
+   BOTON CONSULTAR
+========================= */
+.modal-paciente-btn-search {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+
+    box-shadow:
+        0 8px 18px rgba(37, 99, 235, 0.22);
+}
+
+.modal-paciente-btn-search:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 12px 22px rgba(37, 99, 235, 0.28);
+}
+
+.modal-paciente-btn-search:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* =========================
+   ACCIONES
+========================= */
+.modal-paciente-actions {
+    display: flex;
+    gap: 12px;
+
+    margin-top: 8px;
+}
+
+/* =========================
+   BOTON GUARDAR
+========================= */
+.modal-paciente-btn-save {
+    flex: 1;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #16a34a,
+        #15803d
+    );
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.modal-paciente-btn-save:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 20px rgba(22, 163, 74, 0.22);
+}
+
+/* =========================
+   BOTON CANCELAR
+========================= */
+.modal-paciente-btn-cancel {
+    flex: 1;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.modal-paciente-btn-cancel:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 20px rgba(239, 68, 68, 0.22);
+}
+
+/* =========================
+   ANIMACION
+========================= */
+@keyframes modalPacienteFadeIn {
+    from {
+        opacity: 0;
+        transform:
+            scale(0.96)
+            translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+
+    .modal-paciente-content {
+        width: 92%;
+        padding: 22px;
+    }
+
+    .modal-paciente-actions {
+        flex-direction: column;
+    }
+}

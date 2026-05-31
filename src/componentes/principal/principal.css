@@ -1,0 +1,59 @@
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.principal-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* ===== LADOS ===== */
+.principal-lado {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.principal-blanco {
+  background: white;
+}
+
+.principal-celeste {
+  background: #38bdf8;
+}
+
+/* ===== BOTONES ===== */
+.principal-btn {
+  padding: 18px 32px;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.principal-btn:hover {
+  transform: scale(1.05);
+}
+
+.principal-paciente {
+  background: #1e293b;
+  color: white;
+}
+
+.principal-trabajador {
+  background: white;
+  color: #0f172a;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+  .principal-container {
+    flex-direction: column;
+  }
+
+  .principal-btn {
+    width: 80%;
+    font-size: 18px;
+  }
+}

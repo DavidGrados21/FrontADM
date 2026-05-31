@@ -1,0 +1,339 @@
+/* ===== OVERLAY ===== */
+
+.epm-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+
+  background:
+    rgba(5, 67, 211, 0.248);
+
+  backdrop-filter: blur(4px);
+
+  animation:
+    epmOverlayFade 0.2s ease;
+}
+
+/* ===== MODAL ===== */
+
+.epm-box {
+  width: 950px;
+  max-width: 100%;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 32px;
+
+  position: relative;
+
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.18),
+    0 10px 25px rgba(0, 0, 0, 0.08);
+
+  animation: epmFade 0.25s ease;
+
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.epm-error {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ===== ANIMACION ===== */
+
+@keyframes epmOverlayFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+/* ===== BOTON CERRAR ===== */
+
+.epm-close-btn {
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+}
+
+.epm-close-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ===== TITULO ===== */
+
+.epm-title {
+  text-align: center;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  color: #0f172a;
+
+  margin-bottom: 34px;
+}
+
+/* ===== COLUMNAS ===== */
+
+.epm-columns {
+  display: flex;
+  gap: 40px;
+}
+
+.epm-column {
+  flex: 1;
+}
+
+/* ===== TITULOS ===== */
+
+.epm-section-title {
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #1e293b;
+
+  margin-bottom: 18px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ===== INFORMACION ===== */
+
+.epm-static-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.epm-info-item {
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  padding: 16px;
+}
+
+.epm-info-item span {
+  display: block;
+
+  font-size: 13px;
+
+  color: #64748b;
+
+  margin-bottom: 6px;
+}
+
+.epm-info-item p {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  color: #0f172a;
+}
+
+/* ===== GRID ===== */
+
+.epm-form-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+}
+
+.epm-full-width {
+  grid-column: span 2;
+}
+
+/* ===== INPUT GROUP ===== */
+
+.epm-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.epm-input-group label {
+  margin-bottom: 7px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #475569;
+}
+
+/* ===== INPUT ===== */
+
+.epm-input {
+  width: 100%;
+
+  height: 46px;
+
+  padding: 0 14px;
+
+  border-radius: 10px;
+
+  border: 1px solid #cbd5e1;
+
+  outline: none;
+
+  background: white;
+
+  color: #0f172a;
+
+  font-size: 14px;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.epm-input::placeholder {
+  color: #94a3b8;
+}
+
+.epm-input:hover {
+  border-color: #94a3b8;
+}
+
+.epm-input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+/* ===== BOTONES ===== */
+
+.epm-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 14px;
+
+  margin-top: 34px;
+}
+
+.epm-cancel-btn,
+.epm-save-btn {
+  min-width: 150px;
+
+  height: 48px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* ===== CANCELAR ===== */
+
+.epm-cancel-btn {
+  background: #e2e8f0;
+  color: #334155;
+
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+}
+
+.epm-cancel-btn:hover {
+  background: #cbd5e1;
+}
+
+/* ===== GUARDAR ===== */
+
+.epm-save-btn {
+  background: #2563eb;
+  color: white;
+
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+}
+
+.epm-save-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 850px) {
+
+  .epm-columns {
+    flex-direction: column;
+  }
+
+  .epm-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .epm-full-width {
+    grid-column: span 1;
+  }
+
+  .epm-box {
+    padding: 24px;
+  }
+
+  .epm-title {
+    font-size: 24px;
+  }
+
+  .epm-actions {
+    flex-direction: column;
+  }
+
+  .epm-cancel-btn,
+  .epm-save-btn {
+    width: 100%;
+  }
+
+}
