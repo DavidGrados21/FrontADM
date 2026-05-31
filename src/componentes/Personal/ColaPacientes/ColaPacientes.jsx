@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TriajeModal from "../TriajeModal/TriajeModal";
+import ModalDescrip from "../ModalDescricpcion/modalDescrip";
 import { api } from "../../../api/api";
 import "./ColaPacientes.css";
 
@@ -7,7 +8,8 @@ export default function ColaPacientes() {
   const [entrantes, setEntrantes] = useState([]);
   const [pendientes, setPendientes] = useState([]);
   const [enAtencion, setEnAtencion] = useState([]);
-  
+
+  const [mostrarModal, setMostrarModal] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [casoSeleccionado, setCasoSeleccionado] = useState(null);
 
@@ -15,6 +17,12 @@ export default function ColaPacientes() {
     setCasoSeleccionado(caso);
     setModalOpen(true);
   };
+
+  const Descrip = (caso) => {
+    setCasoSeleccionado(caso);
+    setMostrarModal(true);
+  };
+
 
   const cambiarAAtencion = async (caso_id) => {
     try {
@@ -178,6 +186,12 @@ return (
         caso={casoSeleccionado}
         onClose={() => setModalOpen(false)}
         onSuccess={obtenerDatos}
+      />
+
+      <ModalDescrip
+        abierto={mostrarModal}
+        casoId={casoSeleccionado}
+        onClose={() => setMostrarModal(false)}
       />
 
     </>
