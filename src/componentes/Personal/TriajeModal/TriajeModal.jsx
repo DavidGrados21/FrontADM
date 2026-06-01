@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { api } from "../../../api/api";
 import "./TriajeModal.css";
 import IMCCalculator from "../IMCCalculator/IMCCalculator";
-import { useRef } from "react";
 
 
 export default function TriajeModal({
@@ -16,9 +15,7 @@ export default function TriajeModal({
   const [sugerencias, setSugerencias] = useState([]);
 
   const [prioridad, setPrioridad] = useState(null);
-  const [especialidad, setEspecialidad] = useState(null);
-  const [doctores, setDoctores] = useState([]);
-  const [doctorSeleccionado, setDoctorSeleccionado] = useState("");
+  const [area, setArea] = useState(null);
 
   const [loadingIA, setLoadingIA] = useState(false);
 
@@ -29,6 +26,28 @@ export default function TriajeModal({
   });
 
   const [errors, setErrors] = useState({});
+
+  const obtenerClaseESI = (nivel) => {
+    switch (Number(nivel)) {
+      case 1:
+        return "esi-1";
+
+      case 2:
+        return "esi-2";
+
+      case 3:
+        return "esi-3";
+
+      case 4:
+        return "esi-4";
+
+      case 5:
+        return "esi-5";
+
+      default:
+        return "";
+    }
+  };
 
   // =========================
   // CARGAR SINTOMAS
@@ -69,6 +88,7 @@ export default function TriajeModal({
       setErrors({});
       setSugerencias([]);
       setPrioridad(null);
+      setArea(null);
     }
   }, [caso]);
 
@@ -167,37 +187,29 @@ export default function TriajeModal({
   const clasificarTriaje = async ( sintomas ) => {
     if ( !sintomas || sintomas.trim().length < 5) {
       setPrioridad(null);
-      setEspecialidad(null);
-      setDoctores([]);
+      setArea(null);
       return;
     }
 
     try {
       setLoadingIA(true);
 
-      const [triajeResponse, especialidadResponse] = await Promise.all([
+      const [triajeResponse, areaResponse] = await Promise.all([
         api.post("/triaje/clasificar-triaje", { sintomas, }),
-        api.post("/triaje/clasificar-doctor", { sintomas, }),
+        api.post("/triaje/clasificar-area", { sintomas, }),
       ]);
 
-      const especialidad = especialidadResponse.data.especialidad;
+      setPrioridad(triajeResponse.data.prioridad);
+      setArea(areaResponse.data.area);
 
-      setPrioridad( Number ( triajeResponse.data.prioridad ));
-      setEspecialidad(especialidad);
-
-      const doctoresResponse = await api.post("/doctores-disponibles", {
-        especialidad,
-      });
-      setDoctores(doctoresResponse.data);
-      console.log("Doctores:", doctoresResponse.data);
+      setErrors({});
     } 
     
     catch (error) {
       console.log( "Error IA:", error.response?.data || error );
 
       setPrioridad(null);
-      setEspecialidad(null);
-      setDoctores([]);
+      setArea(null);
 
     } finally {
       setLoadingIA(false);
@@ -235,7 +247,8 @@ export default function TriajeModal({
       newErrors.altura ="Altura inválida";
     }
 
-    if (prioridad === null) {
+    if (prioridad === null || prioridad === undefined) 
+    {
       newErrors.prioridad ="La IA aún no clasifica el caso";
     }
 
@@ -304,7 +317,6 @@ export default function TriajeModal({
                 placeholder="Describa los síntomas..."
                 value={form.sintomas}
                 onChange={handleChange}
-                onScroll={() => buscarSintomas(form.sintomas)}
               />
 
               {sugerencias.length > 0 && (
@@ -374,6 +386,12 @@ export default function TriajeModal({
               {loadingIA ? "Clasificando..." : "Clasificar con IA"}
             </button>
 
+            {errors.prioridad && (
+              <small className="triaje-modal-error">
+                {errors.prioridad}
+              </small>
+            )}
+
             {loadingIA && (
                <div className="triaje-loading">
                  <div className="triaje-spinner"></div>
@@ -384,34 +402,18 @@ export default function TriajeModal({
             {prioridad !== null && !loadingIA && (
               <div className="triaje-ia-result">
                 <h3>Prioridad IA</h3>
-                <p>{prioridad}</p>
+                <p className={obtenerClaseESI(prioridad)}> Nivel ESI: {prioridad}</p>
               </div>
             )}
 
-            {especialidad !== null && !loadingIA && (
+            {area !== null && !loadingIA && (
               <div className="triaje-ia-result">
-                <h3>Especialidad IA</h3>
+                <h3>Area designada</h3>
 
                 <div className="triaje-especialidad-doctores">
                   <p className="triaje-especialidad-text">
-                    {especialidad}
+                    {area}
                   </p>
-                  
-                  <h3>Elija el doctor</h3>
-
-                  <select
-                    value={doctorSeleccionado}
-                    onChange={(e) => setDoctorSeleccionado(e.target.value)}
-                    className="triaje-select-doctor"
-                  >
-                    <option value="">Seleccionar doctor</option>
-
-                    {doctores.map((doc, index) => (
-                      <option key={index} value={doc}>
-                        {doc}
-                      </option>
-                    ))}
-                  </select>
                 </div>
               </div>
             )} 

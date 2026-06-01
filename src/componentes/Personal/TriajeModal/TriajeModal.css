@@ -496,6 +496,26 @@
   cursor: pointer;
 }
 
+.triaje-ia-result p.esi-1 {
+  color: #d32f2f;
+}
+
+.triaje-ia-result p.esi-2 {
+  color: #f57c00;
+}
+
+.triaje-ia-result p.esi-3 {
+  color: #fbc02d;
+}
+
+.triaje-ia-result p.esi-4 {
+  color: #388e3c;
+}
+
+.triaje-ia-result p.esi-5 {
+  color: #1976d2;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
