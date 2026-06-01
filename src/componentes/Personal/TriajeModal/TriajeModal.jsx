@@ -11,17 +11,16 @@ export default function TriajeModal({
   caso,
   onSuccess,
 }) {
-  const [diccionario, setDiccionario] =
-    useState([]);
+  const [diccionario, setDiccionario] = useState([]);
 
-  const [sugerencias, setSugerencias] =
-    useState([]);
+  const [sugerencias, setSugerencias] = useState([]);
 
-  const [prioridad, setPrioridad] =
-    useState(null);
+  const [prioridad, setPrioridad] = useState(null);
+  const [especialidad, setEspecialidad] = useState(null);
+  const [doctores, setDoctores] = useState([]);
+  const [doctorSeleccionado, setDoctorSeleccionado] = useState("");
 
-  const [loadingIA, setLoadingIA] =
-    useState(false);
+  const [loadingIA, setLoadingIA] = useState(false);
 
   const [form, setForm] = useState({
     sintomas: "",
@@ -158,55 +157,48 @@ export default function TriajeModal({
 
     setForm(newForm);
 
-    if (name === "sintomas") {
-      buscarSintomas(value);
-    }
+    if (name === "sintomas") {buscarSintomas(value);}
   };
 
   // =========================
   // CLASIFICAR TRIAJE IA
   // =========================
 
-  const clasificarTriaje = async (
-    sintomas
-  ) => {
-    if (
-      !sintomas ||
-      sintomas.trim().length < 5
-    ) {
+  const clasificarTriaje = async ( sintomas ) => {
+    if ( !sintomas || sintomas.trim().length < 5) {
       setPrioridad(null);
+      setEspecialidad(null);
+      setDoctores([]);
       return;
     }
 
     try {
       setLoadingIA(true);
 
-      const response =
-        await api.post(
-          "/triaje/clasificar-triaje",
-          {
-            sintomas,
-          }
-        );
+      const [triajeResponse, especialidadResponse] = await Promise.all([
+        api.post("/triaje/clasificar-triaje", { sintomas, }),
+        api.post("/triaje/clasificar-doctor", { sintomas, }),
+      ]);
 
-      console.log(
-        "Respuesta IA:",
-        response.data
-      );
+      const especialidad = especialidadResponse.data.especialidad;
 
-      setPrioridad(
-        Number(
-          response.data.prioridad
-        )
-      );
-    } catch (error) {
-      console.log(
-        "Error IA:",
-        error.response?.data ||
-          error
-      );
+      setPrioridad( Number ( triajeResponse.data.prioridad ));
+      setEspecialidad(especialidad);
+
+      const doctoresResponse = await api.post("/doctores-disponibles", {
+        especialidad,
+      });
+      setDoctores(doctoresResponse.data);
+      console.log("Doctores:", doctoresResponse.data);
+    } 
+    
+    catch (error) {
+      console.log( "Error IA:", error.response?.data || error );
 
       setPrioridad(null);
+      setEspecialidad(null);
+      setDoctores([]);
+
     } finally {
       setLoadingIA(false);
     }
@@ -219,44 +211,32 @@ export default function TriajeModal({
   const validar = () => {
     const newErrors = {};
 
-    if (
-      !form.sintomas ||
-      form.sintomas.trim()
-        .length < 3
-    ) {
-      newErrors.sintomas =
-        "Síntomas requeridos";
+    if (!form.sintomas || form.sintomas.trim() 
+      .length < 3
+    ) 
+    {
+      newErrors.sintomas = "Síntomas requeridos";
     }
 
-    const peso = Number(
-      form.peso
-    );
+    const peso = Number( form.peso );
 
-    if (
-      isNaN(peso) ||
-      peso <= 0 ||
-      peso > 300
-    ) {
-      newErrors.peso =
-        "Peso inválido";
+    if ( isNaN(peso) || peso <= 0 || peso > 300)
+    {
+      newErrors.peso = "Peso inválido";
     }
 
-    const altura = Number(
-      form.altura
-    );
+    const altura = Number(form.altura);
 
     if (
       isNaN(altura) ||
       altura <= 0 ||
       altura > 2.5
     ) {
-      newErrors.altura =
-        "Altura inválida";
+      newErrors.altura ="Altura inválida";
     }
 
     if (prioridad === null) {
-      newErrors.prioridad =
-        "La IA aún no clasifica el caso";
+      newErrors.prioridad ="La IA aún no clasifica el caso";
     }
 
     setErrors(newErrors);
@@ -275,56 +255,28 @@ export default function TriajeModal({
     if (!validar()) return;
 
     try {
-      if (!caso?.caso_id) {
-        alert(
-          "Caso inválido"
-        );
+      if (!caso?.caso_id) 
+      {
+        alert("Caso inválido");
         return;
       }
-
       const payload = {
-        sintomas:
-          form.sintomas.trim(),
-        
-        altura: Number(
-          form.altura
-        ),
+        sintomas: form.sintomas.trim(), 
+        altura: Number(form.altura),
+        peso: Number(form.peso),
+        prioridad_ia:Number(prioridad),};
 
-        peso: Number(
-          form.peso
-        ),
+      console.log("Payload enviado:",payload);
 
-        prioridad_ia:
-          Number(prioridad),
-      };
+      const response = await api.put(`/triaje/${caso.caso_id}`,payload);
 
-      console.log(
-        "Payload enviado:",
-        payload
-      );
-
-      const response =
-        await api.put(
-          `/triaje/${caso.caso_id}`,
-          payload
-        );
-
-      console.log(
-        "Respuesta guardar:",
-        response.data
-      );
+      console.log("Respuesta guardar:",response.data);
 
       onSuccess();
       onClose();
     } catch (e) {
-      console.log(
-        "Error guardar:",
-        e.response?.data || e
-      );
-
-      alert(
-        "Error al guardar triaje"
-      );
+      console.log("Error guardar:",e.response?.data || e);
+      alert("Error al guardar triaje");
     }
   };
 
@@ -333,67 +285,48 @@ export default function TriajeModal({
   return (
     <div className="triaje-modal-overlay">
       <div className="triaje-modal-content">
-        <h2 className="triaje-modal-title">
-          Triaje del Paciente
-        </h2>
+        <h2 className="triaje-modal-title"> Triaje del Paciente</h2>
 
         <p className="triaje-modal-paciente">
-          <strong>Nombre:</strong>{" "}
-          {caso?.nombre}
+          <strong>Nombre:</strong> {caso?.nombre}
         </p>
 
         <div className="triaje-modal-grid">
           {/* IZQUIERDA */}
 
           <div className="triaje-modal-left">
-            <label className="triaje-modal-label">
-              Síntomas
-            </label>
+            <label className="triaje-modal-label"> Síntomas </label>
 
             <div className="triaje-textarea-wrapper">
-
               <textarea
                 className="triaje-modal-textarea"
                 name="sintomas"
                 placeholder="Describa los síntomas..."
                 value={form.sintomas}
                 onChange={handleChange}
-                onScroll={() =>
-                  buscarSintomas(form.sintomas)
-                }
+                onScroll={() => buscarSintomas(form.sintomas)}
               />
 
               {sugerencias.length > 0 && (
-                <div 
-                  className="triaje-sugerencias" 
-                >
+                <div className="triaje-sugerencias" >
                   {sugerencias.map((item) => (
                     <div
                       key={item}
                       className="triaje-sugerencia-item"
-                      onClick={() =>
-                        seleccionarSintoma(item)
-                      }
+                      onClick={() => seleccionarSintoma(item)}
                     >
                       {item}
                     </div>
                   ))}
                 </div>
               )}
-
             </div>
           </div>
 
           {/* DERECHA */}
-
           <div className="triaje-modal-right">
-            {/* PESO */}
-
             <div className="triaje-modal-form-row">
-              <label className="triaje-modal-label">
-                Peso
-              </label>
-
+              <label className="triaje-modal-label"> Peso </label>
               <input
                 className="triaje-modal-input"
                 name="peso"
@@ -406,18 +339,13 @@ export default function TriajeModal({
             </div>
 
             {errors.peso && (
-              <small className="triaje-modal-error">
-                {errors.peso}
-              </small>
+              <small className="triaje-modal-error"> {errors.peso} </small>
             )}
 
             {/* ALTURA */}
 
             <div className="triaje-modal-form-row">
-              <label className="triaje-modal-label">
-                Altura
-              </label>
-
+              <label className="triaje-modal-label"> Altura </label>
               <input
                 className="triaje-modal-input"
                 name="altura"
@@ -435,22 +363,15 @@ export default function TriajeModal({
               </small>
             )}
 
-            <IMCCalculator
-              peso={form.peso}
-              altura={form.altura}
-            />
+            <IMCCalculator peso={form.peso} altura={form.altura} />
 
-            {/* RESULTADO IA */}
+            {/* BOTON IA */}
             <button
               className="triaje-btn-ia"
-              onClick={() =>
-                clasificarTriaje(form.sintomas)
-              }
+              onClick={() => clasificarTriaje(form.sintomas)}
               disabled={loadingIA}
             >
-              {loadingIA
-                ? "Clasificando..."
-                : "Clasificar con IA"}
+              {loadingIA ? "Clasificando..." : "Clasificar con IA"}
             </button>
 
             {loadingIA && (
@@ -466,25 +387,51 @@ export default function TriajeModal({
                 <p>{prioridad}</p>
               </div>
             )}
+
+            {especialidad !== null && !loadingIA && (
+              <div className="triaje-ia-result">
+                <h3>Especialidad IA</h3>
+
+                <div className="triaje-especialidad-doctores">
+                  <p className="triaje-especialidad-text">
+                    {especialidad}
+                  </p>
+                  
+                  <h3>Elija el doctor</h3>
+
+                  <select
+                    value={doctorSeleccionado}
+                    onChange={(e) => setDoctorSeleccionado(e.target.value)}
+                    className="triaje-select-doctor"
+                  >
+                    <option value="">Seleccionar doctor</option>
+
+                    {doctores.map((doc, index) => (
+                      <option key={index} value={doc}>
+                        {doc}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )} 
+
+            <div className="triaje-modal-actions">
+              <button
+                className="triaje-modal-btn-save"
+                onClick={guardar}
+              >
+                Guardar
+              </button>
+
+              <button
+                className="triaje-modal-btn-cancel"
+                onClick={onClose}
+              >
+                Cancelar
+              </button>
+            </div>
           </div>
-        </div>
-
-        {/* BOTONES */}
-
-        <div className="triaje-modal-actions">
-          <button
-            className="triaje-modal-btn-save"
-            onClick={guardar}
-          >
-            Guardar
-          </button>
-
-          <button
-            className="triaje-modal-btn-cancel"
-            onClick={onClose}
-          >
-            Cancelar
-          </button>
         </div>
       </div>
     </div>
