@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { api } from "../../../api/api";
+import { api } from "../../../../api/api";
 import "./TriajeModal.css";
 import IMCCalculator from "../IMCCalculator/IMCCalculator";
 import { useRef } from "react";
@@ -26,6 +26,7 @@ export default function TriajeModal({
     sintomas: "",
     peso: "",
     altura: "",
+    doctor: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -180,20 +181,19 @@ export default function TriajeModal({
         api.post("/triaje/clasificar-doctor", { sintomas, }),
       ]);
 
-      const especialidad = especialidadResponse.data.especialidad;
+      const prioridadIA = Number(triajeResponse.data.prioridad);
+      const especialidadIA = especialidadResponse.data.especialidad;
 
-      setPrioridad( Number ( triajeResponse.data.prioridad ));
-      setEspecialidad(especialidad);
+      setPrioridad(prioridadIA);
+      setEspecialidad(especialidadIA);
 
-      const doctoresResponse = await api.post("/doctores-disponibles", {
-        especialidad,
-      });
+      const doctoresResponse = await api.post("/doctores-disponibles", { especialidad: especialidadIA,});
+
       setDoctores(doctoresResponse.data);
-      console.log("Doctores:", doctoresResponse.data);
     } 
     
     catch (error) {
-      console.log( "Error IA:", error.response?.data || error );
+      console.log( "ERROR COMPLETO:", JSON.stringify(error.response?.data, null, 2));
 
       setPrioridad(null);
       setEspecialidad(null);
@@ -261,10 +261,14 @@ export default function TriajeModal({
         return;
       }
       const payload = {
-        sintomas: form.sintomas.trim(), 
+        sintomas: form.sintomas.trim(),
+        peso: Number(form.peso), 
         altura: Number(form.altura),
-        peso: Number(form.peso),
-        prioridad_ia:Number(prioridad),};
+        prioridad_ia:Number(prioridad),
+        doctor: form.doctor,
+        especialidad: especialidad,
+      };
+      
 
       console.log("Payload enviado:",payload);
 
@@ -400,8 +404,10 @@ export default function TriajeModal({
                   <h3>Elija el doctor</h3>
 
                   <select
-                    value={doctorSeleccionado}
-                    onChange={(e) => setDoctorSeleccionado(e.target.value)}
+                    value={form.doctor}
+                    onChange={(e) => 
+                      setForm({ ...form, doctor: e.target.value })
+                    }
                     className="triaje-select-doctor"
                   >
                     <option value="">Seleccionar doctor</option>

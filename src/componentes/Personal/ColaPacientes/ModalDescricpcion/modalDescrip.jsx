@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../api/api";
+import {api} from "../../../../api/api";
 import "./modalDescrip.css";
 
 function ModalDescrip({ abierto, casoId, onClose }) {

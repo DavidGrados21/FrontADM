@@ -209,6 +209,7 @@ export default function ModalPaciente({
         fecha_nacimiento:
           fechaFormateada,
         origen : form.origen,
+        id_especialidad: 0
       });
 
       onSave();

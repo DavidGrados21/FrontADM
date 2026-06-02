@@ -1,14 +1,7 @@
-import {
-  useEffect,
-  useState,
-} from "react";
-
-import { api } from "../../../api/api";
-
+import {useEffect,useState} from "react";
+import { api } from "../../../../api/api";
 import "./ExpandRow.css";
-
-import EditPatientModal from
-  "../ModalEditarPaciente/EditPatientModal";
+import EditPatientModal from "../ModalEditarPaciente/EditPatientModal";
 
 export default function ExpandRow({
   pacienteId,

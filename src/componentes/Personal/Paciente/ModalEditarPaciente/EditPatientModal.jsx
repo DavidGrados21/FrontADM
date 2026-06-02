@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import "./EditPatientModal.css";
-import { api } from "../../../api/api";
+import { api } from "../../../../api/api";
 
 function EditPatientModal({
   isOpen,

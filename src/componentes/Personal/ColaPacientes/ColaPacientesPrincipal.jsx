@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import TriajeModal from "../TriajeModal/TriajeModal";
-import ModalDescrip from "../ModalDescricpcion/modalDescrip";
+import TriajeModal from "./TriajeModal/TriajeModal";
+import ModalDescrip from "./ModalDescricpcion/modalDescrip";
 import { api } from "../../../api/api";
-import "./ColaPacientes.css";
+import "./ColaPacientesPrincipal.css";
 
 export default function ColaPacientes() {
   const [entrantes, setEntrantes] = useState([]);
@@ -149,34 +149,8 @@ return (
               <tbody>
                 {renderTabla(pendientes, "pendiente")}
               </tbody>
-
             </table>
           </div>
-
-          {/* EN ATENCIÓN */}
-          <div className="patients-block finalizado">
-
-            <h3>En Atención</h3>
-
-            <table className="patients-table">
-
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>DNI</th>
-                  <th>Nombre</th>
-                  <th>Prioridad</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {renderTabla(enAtencion, "enAtencion")}
-              </tbody>
-
-            </table>
-          </div>
-
         </div>
       </div>
 

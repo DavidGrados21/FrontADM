@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../../api/api";
-import ExpandRow from "../ExpandRow-paciente/ExpandRow";
+import ExpandRow from "./ExpandRow-paciente/ExpandRow";
 import "./Paciente.css";
 
 export default function Pacientes() {
@@ -43,7 +43,6 @@ export default function Pacientes() {
 
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>DNI</th>
                 <th>Acción</th>
@@ -65,8 +64,6 @@ export default function Pacientes() {
                 pacientes.map((p) => (
                   <>
                     <tr key={p.id}>
-
-                      <td>{p.id}</td>
 
                       <td>{p.nombre}</td>
 

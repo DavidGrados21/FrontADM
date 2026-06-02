@@ -1,5 +1,6 @@
 import { useState } from "react"
 import VistaPersonal from "../Personal/VistaPersonal/VistaPersonal"
+import Login from "../Personal/Login/Login"
 import "./principal.css"
 
 export default function Principal() {
@@ -7,7 +8,7 @@ export default function Principal() {
   const [enter, setEnter] = useState(false)
 
   if (enter) {
-    return <VistaPersonal />
+    return <Login />
   }
 
   return (
