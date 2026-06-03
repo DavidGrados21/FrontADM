@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TriajeModal from "./TriajeModal/TriajeModal";
-import ModalDescrip from "./ModalDescricpcion/modalDescrip";
+import ModalDescrip from "../ColaPacientesDoctor/ModalDescricpcion/modalDescrip";
 import { api } from "../../../api/api";
 import "./ColaPacientesPrincipal.css";
 

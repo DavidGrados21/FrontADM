@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Login.css";
+import { api } from "../../../api/api";
 import VistaPersonal from "../VistaPersonal/VistaPersonal";
 
 function Login() {
@@ -8,36 +9,47 @@ function Login() {
   const [logueado, setLogueado] = useState(false);
   const [errorCorreo, setErrorCorreo] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+  const [idDoctor, setIdDoctor] = useState(null);
 
-  const handleSubmit = (e) => {  
+  const handleSubmit = async (e) => {  
     e.preventDefault();
-
-    console.log("Correo:", correo);
-    console.log("Password:", password);
 
     setErrorCorreo("");
     setErrorPassword("");
 
-    let hayError = false
-
-    if (correo !== "admin@admin.com") {
-        setErrorCorreo("Correo incorrecto");
-        hayError = true;
+    if (correo === "admin@admin.com" && password === "admin") {
+      setIdDoctor(0);
+      setLogueado(true);
+      return;
     }
 
-    if (password !== "admin") {
-        setErrorPassword("Contraseña incorrecta");
-        hayError = true;
-    }
+    try {
+      const response = await api.post("/doctor/login",
+        {
+          correo,
+          password,
+        }
+      );
 
-    if (!hayError) {
+      if (response.data.doctor) {
+        setIdDoctor(response.data.doctor.id_doctor);
         setLogueado(true);
+      } else {
+        setErrorCorreo("Credenciales incorrectas");
+        setErrorPassword("Credenciales incorrectas");
+      }
+    } catch (error) {
+      console.error(error);
+
+      setErrorCorreo("Error al iniciar sesión");
+      setErrorPassword("Error al iniciar sesión");
     }
   };
 
   if (logueado) {
-    return <VistaPersonal />;
+    return <VistaPersonal idDoctor={idDoctor} />;
   }
+
 
   return (
     <div className="login-container">

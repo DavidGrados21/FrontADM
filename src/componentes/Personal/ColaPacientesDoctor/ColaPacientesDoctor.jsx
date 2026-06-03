@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import TriajeModal from "./TriajeModal/TriajeModal";
 import ModalDescrip from "./ModalDescricpcion/modalDescrip";
 import { api } from "../../../api/api";
-import "./ColaPacientesPrincipal.css";
+import "./ColaPacientesDoctor.css";
 
-export default function ColaPacientes() {
-  const [entrantes, setEntrantes] = useState([]);
+export default function ColaPacientesDoctor({ idDoctor }) {
   const [pendientes, setPendientes] = useState([]);
   const [enAtencion, setEnAtencion] = useState([]);
 
@@ -35,18 +33,14 @@ export default function ColaPacientes() {
   };
 
   const obtenerDatos = async () => {
-    try {
-      const resPend = await api.get("/cola/entrante");
-      setEntrantes(resPend.data.casos || []);
-    } catch (error) {console.error("Error entrantes:", error);}
 
     try {
-      const resAtn = await api.get("/cola/pendiente");
+      const resAtn = await api.get(`/doctor/${idDoctor}/casos/pendiente`);
       setPendientes(resAtn.data.casos || []);
     } catch (error) {console.error("Error pendientes:", error);}
 
     try {
-      const resFin = await api.get("/cola/en_atencion");
+      const resFin = await api.get(`/doctor/${idDoctor}/casos/en_atencion`);
       setEnAtencion(resFin.data.casos || []);
     } catch (error) {console.error("Error en atención:", error);}
   };
@@ -75,11 +69,6 @@ export default function ColaPacientes() {
         {tipo === "pendiente" && <td className="priority-cell">{p.prioridad}</td>}
         {tipo === "enAtencion" && <td className="priority-cell">{p.prioridad}</td>}
         <td>
-          {tipo === "entrante" && (
-            <button onClick={() => abrirModal(p)}>
-              Hacer triaje
-            </button>
-          )}
           {tipo === "pendiente" && (
             <button onClick={() => cambiarAAtencion(p.caso_id)}>
               Atender
@@ -106,29 +95,6 @@ return (
 
         <div className="patients-container">
 
-          {/* ENTRANTES */}
-          <div className="patients-block pendiente">
-
-            <h3>Entrante</h3>
-
-            <table className="patients-table">
-
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>DNI</th>
-                  <th>Nombre</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {renderTabla(entrantes, "entrante")}
-              </tbody>
-
-            </table>
-          </div>
-
           {/* PENDIENTES */}
           <div className="patients-block atencion">
 
@@ -153,14 +119,6 @@ return (
           </div>
         </div>
       </div>
-
-      {/* MODAL */}
-      <TriajeModal
-        isOpen={modalOpen}
-        caso={casoSeleccionado}
-        onClose={() => setModalOpen(false)}
-        onSuccess={obtenerDatos}
-      />
 
       <ModalDescrip
         abierto={mostrarModal}
