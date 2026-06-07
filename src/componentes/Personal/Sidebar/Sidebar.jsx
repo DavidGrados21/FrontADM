@@ -1,7 +1,7 @@
 import "./Sidebar.css"
 import { useState } from "react"
 
-export default function Sidebar({ setView }) {
+export default function Sidebar({ setView , idDoctor }){
   const [open, setOpen] = useState(false)
 
   return (
@@ -32,26 +32,29 @@ export default function Sidebar({ setView }) {
           >
             Principal
           </button>
-
-          <button
-            className="sidebar-btn"
-            onClick={() => {
-              setView("dashboard")
-              setOpen(false)
-            }}
-          >
-            Dashboard
-          </button>
-
-          <button
-            className="sidebar-btn"
-            onClick={() => {
-              setView("paciente")
-              setOpen(false)
-            }}
-          >
-            Pacientes
-          </button>
+          {idDoctor === 0 && (
+            <>
+              <button
+                className="sidebar-btn"
+                onClick={() => {
+                  setView("dashboard");
+                  setOpen(false);
+                }}
+              >
+                Dashboard
+              </button>
+                      
+              <button
+                className="sidebar-btn"
+                onClick={() => {
+                  setView("dashboard");
+                  setOpen(false);
+                }}
+              >
+                Pacientes
+              </button>
+            </>
+          )}
         </nav>
       </aside>
 

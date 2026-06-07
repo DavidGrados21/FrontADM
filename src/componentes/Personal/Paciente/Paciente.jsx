@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../../../api/api";
 import ExpandRow from "./ExpandRow-paciente/ExpandRow";
+import { Fragment } from "react";
 import "./Paciente.css";
 
 export default function Pacientes() {
@@ -24,9 +25,9 @@ export default function Pacientes() {
     obtenerPacientes();
   }, []);
 
-  const toggleExpand = (id) => {
+  const toggleExpand = (dni) => {
     setExpandedId(
-      expandedId === id ? null : id
+      expandedId === dni ? null : dni
     );
   };
 
@@ -62,8 +63,8 @@ export default function Pacientes() {
               ) : (
 
                 pacientes.map((p) => (
-                  <>
-                    <tr key={p.id}>
+                  <Fragment key={p.dni}>
+                    <tr key={p.dni}>
 
                       <td>{p.nombre}</td>
 
@@ -71,9 +72,9 @@ export default function Pacientes() {
 
                       <td>
                         <button
-                          onClick={() => toggleExpand(p.id)}
+                          onClick={() => toggleExpand(p.dni)}
                         >
-                          {expandedId === p.id
+                          {expandedId === p.dni
                             ? "Cerrar"
                             : "Expandir"}
                         </button>
@@ -81,12 +82,12 @@ export default function Pacientes() {
 
                     </tr>
 
-                    {expandedId === p.id && (
+                    {expandedId === p.dni && (
                       <ExpandRow
-                        pacienteId={p.id}
+                        pacienteDni={p.dni}
                       />
                     )}
-                  </>
+                </Fragment>
                 ))
 
               )}

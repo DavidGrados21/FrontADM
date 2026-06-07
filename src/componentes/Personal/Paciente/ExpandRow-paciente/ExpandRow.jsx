@@ -4,9 +4,11 @@ import "./ExpandRow.css";
 import EditPatientModal from "../ModalEditarPaciente/EditPatientModal";
 
 export default function ExpandRow({
-  pacienteId,
+  pacienteDni,
   columns = 5,
 }) {
+
+  console.log("pacienteId recibido:", pacienteDni);
 
   /* =========================
      STATES
@@ -34,7 +36,7 @@ export default function ExpandRow({
 
         const response =
           await api.get(
-            `/pacientes/${pacienteId}`
+            `/pacientes/${pacienteDni}`
           );
 
         setPaciente(
@@ -74,7 +76,7 @@ export default function ExpandRow({
 
           const response =
             await api.get(
-              `/pacientes/${pacienteId}`
+              `/pacientes/${pacienteDni}`
             );
 
           if (mounted) {
@@ -103,7 +105,7 @@ export default function ExpandRow({
 
       };
 
-    if (pacienteId) {
+    if (pacienteDni) {
       fetchPaciente();
     }
 
@@ -111,7 +113,7 @@ export default function ExpandRow({
       mounted = false;
     };
 
-  }, [pacienteId]);
+  }, [pacienteDni]);
 
   /* =========================
      LOADING
@@ -170,9 +172,9 @@ export default function ExpandRow({
   ========================= */
 
   const fechaNacimiento =
-    paciente.fecha_nacimiento
+    paciente.fecha_nacimiento_paciente
       ? new Date(
-          paciente.fecha_nacimiento
+          paciente.fecha_nacimiento_paciente
         ).toLocaleDateString()
       : "-";
 
@@ -205,21 +207,15 @@ export default function ExpandRow({
                 <div className="er-grid">
 
                   <p>
-                    <strong>ID:</strong>
-                    {" "}
-                    {paciente.id}
-                  </p>
-
-                  <p>
                     <strong>DNI:</strong>
                     {" "}
-                    {paciente.dni}
+                    {paciente.dni_paciente}
                   </p>
 
                   <p>
                     <strong>Nombre:</strong>
                     {" "}
-                    {paciente.nombre}
+                    {paciente.nombre_paciente}
                   </p>
 
                   <p>
@@ -233,7 +229,7 @@ export default function ExpandRow({
                   <p>
                     <strong>Sexo:</strong>
                     {" "}
-                    {paciente.sexo}
+                    {paciente.sexo_paciente}
                   </p>
 
                 </div>
@@ -258,7 +254,7 @@ export default function ExpandRow({
                     </strong>
                     {" "}
                     {
-                      paciente.telefono ||
+                      paciente.telefono_paciente ||
                       "-"
                     }
                   </p>
@@ -269,7 +265,7 @@ export default function ExpandRow({
                     </strong>
                     {" "}
                     {
-                      paciente.direccion ||
+                      paciente.direccion_paciente ||
                       "-"
                     }
                   </p>
@@ -280,7 +276,7 @@ export default function ExpandRow({
                     </strong>
                     {" "}
                     {
-                      paciente.tipo_sangre ||
+                      paciente.tipo_sangre_paciente ||
                       "-"
                     }
                   </p>
@@ -291,7 +287,7 @@ export default function ExpandRow({
                     </strong>
                     {" "}
                     {
-                      paciente.tiene_tatuajes
+                      paciente.tiene_tatuajes_paciente
                         ? "Sí"
                         : "No"
                     }
@@ -303,7 +299,7 @@ export default function ExpandRow({
                     </strong>
                     {" "}
                     {
-                      paciente.religion ||
+                      paciente.religion_paciente ||
                       "-"
                     }
                   </p>
@@ -314,7 +310,7 @@ export default function ExpandRow({
                     </strong>
                     {" "}
                     {
-                      paciente.contacto_emergencia ||
+                      paciente.contacto_emergencia_paciente ||
                       "-"
                     }
                   </p>

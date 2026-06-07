@@ -79,7 +79,6 @@ export default function ColaPacientesDoctor({ idDoctor }) {
               Descripcion
             </button>
           )}
-          
         </td>
       </tr>
     ));
@@ -117,6 +116,30 @@ return (
               </tbody>
             </table>
           </div>
+          {/* EN ATENCIÓN */}
+          <div className="patients-block finalizado">
+
+            <h3>En Atención</h3>
+
+            <table className="patients-table">
+
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>DNI</th>
+                  <th>Nombre</th>
+                  <th>Prioridad</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {renderTabla(enAtencion, "enAtencion")}
+              </tbody>
+
+            </table>
+          </div>
+
         </div>
       </div>
 

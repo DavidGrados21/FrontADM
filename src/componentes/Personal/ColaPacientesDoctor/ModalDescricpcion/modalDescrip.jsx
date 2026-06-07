@@ -30,22 +30,30 @@ function ModalDescrip({ abierto, casoId, onClose }) {
   if (!abierto) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-sintomas">
+    <div className="modal-overlay" onClick={onClose}>
+      <div 
+        className="modal-sintomas"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h3>Síntomas</h3>
 
-        {loading ? (
-          <p>Cargando...</p>
-        ) : (
-          <p>{sintomas}</p>
-        )}
+        <div className="modal-content">
+          {loading ? (
+            <p>Cargando...</p>
+          ) : (
+            <p>{sintomas}</p>
+          )}
+        </div>
 
-        <button onClick={onClose}>
+        <button
+          type="button"
+          className="btn-cerrar"
+          onClick={onClose}
+        >
           Cerrar
         </button>
       </div>
     </div>
   );
 }
-
 export default ModalDescrip;

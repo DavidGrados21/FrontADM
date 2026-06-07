@@ -15,7 +15,7 @@ export default function VistaPersonal({ idDoctor }) {
   return (
     <div className="app-container">
 
-      <Sidebar setView={setView} />
+      <Sidebar setView={setView} idDoctor={idDoctor} />
 
       <main className="content-area">
         {view === "patients" && 
@@ -25,7 +25,7 @@ export default function VistaPersonal({ idDoctor }) {
             <ColaPacientesDoctor idDoctor={idDoctor} />
         ))}
 
-        {view === "dashboard" && idDoctor === 0 && <Dashboard />}
+        {view === "dashboard" && idDoctor === 0 && <Dashboard/>}
 
         {view === "paciente" && idDoctor === 0 && <Pacientes />}
 

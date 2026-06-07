@@ -80,17 +80,6 @@ export default function ColaPacientes() {
               Hacer triaje
             </button>
           )}
-          {tipo === "pendiente" && (
-            <button onClick={() => cambiarAAtencion(p.caso_id)}>
-              Atender
-            </button>
-          )}
-          {tipo === "pendiente" && (
-            <button onClick={() => Descrip(p.caso_id)}>
-              Descripcion
-            </button>
-          )}
-          
         </td>
       </tr>
     ));
@@ -142,7 +131,6 @@ return (
                   <th>DNI</th>
                   <th>Nombre</th>
                   <th>Prioridad</th>
-                  <th>Acción</th>
                 </tr>
               </thead>
 
@@ -161,13 +149,6 @@ return (
         onClose={() => setModalOpen(false)}
         onSuccess={obtenerDatos}
       />
-
-      <ModalDescrip
-        abierto={mostrarModal}
-        casoId={casoSeleccionado}
-        onClose={() => setMostrarModal(false)}
-      />
-
     </>
   );
 }

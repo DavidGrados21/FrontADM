@@ -22,6 +22,7 @@ function EditPatientModal({
     tipo_sangre: "",
     religion: "",
     contacto_emergencia: "",
+    tiene_tatuajes: false,
   });
 
   /* =========================
@@ -32,13 +33,14 @@ function EditPatientModal({
     if (!patient) return;
 
     setForm({
-      telefono: patient.telefono ?? "",
-      direccion: patient.direccion ?? "",
-      tipo_sangre: patient.tipo_sangre ?? "",
-      religion: patient.religion ?? "",
-      contacto_emergencia: patient.contacto_emergencia ?? "",
+      telefono: patient.telefono_paciente ?? "",
+      direccion: patient.direccion_paciente ?? "",
+      tipo_sangre: patient.tipo_sangre_paciente ?? "",
+      religion: patient.religion_paciente ?? "",
+      contacto_emergencia: patient.contacto_emergencia_paciente ?? "",
+      tiene_tatuajes: patient.tiene_tatuajes_paciente ?? false,
     });
-  }, [patient?.id]);
+  }, [patient]);
 
   /* =========================
      ESC CERRAR
@@ -135,7 +137,7 @@ function EditPatientModal({
     try {
       setLoading(true);
 
-      await api.put(`/pacientes/${patient.id}`, form);
+      await api.put(`/pacientes/${patient.dni_paciente}`, form);
 
       onUpdate();
       onClose();
@@ -151,7 +153,7 @@ function EditPatientModal({
   ========================= */
 
   const fechaNacimiento = patient.fecha_nacimiento
-    ? new Date(patient.fecha_nacimiento).toLocaleDateString()
+    ? new Date(patient.fecha_nacimiento_paciente).toLocaleDateString()
     : "-";
 
   /* =========================
@@ -181,9 +183,9 @@ function EditPatientModal({
             <h3 className="epm-section-title">Datos Personales</h3>
 
             <div className="epm-static-info">
-              <p>DNI: {patient.dni}</p>
-              <p>Nombre: {patient.nombre}</p>
-              <p>Sexo: {patient.sexo}</p>
+              <p>DNI: {patient.dni_paciente}</p>
+              <p>Nombre: {patient.nombre_paciente}</p>
+              <p>Sexo: {patient.sexo_paciente}</p>
               <p>Fecha: {fechaNacimiento}</p>
             </div>
           </div>
@@ -250,13 +252,17 @@ function EditPatientModal({
 
               {/* RELIGION */}
               <div className="epm-input-group">
-                <label>Religión</label>
-                <input
-                  name="religion"
-                  value={form.religion}
+                <label>¿Es Testigo de Jehová?</label>
+                <select
+                  name="testigo_jehova"
+                  value={form.religion || ""}
                   onChange={epmHandleChange}
                   className="epm-input"
-                />
+                >
+                  <option value="">Seleccione</option>
+                  <option value="Testigo">Sí</option>
+                  <option value="Otro">No</option>
+               </select>
               </div>
 
               {/* CONTACTO EMERGENCIA */}
@@ -275,9 +281,34 @@ function EditPatientModal({
                 )}
               </div>
 
+              {/* TIENE TATUAJES */}
+              <div className="epm-input-group">
+                <label htmlFor="tiene_tatuajes">Tiene tatuajes</label>
+
+                <select
+                  id="tiene_tatuajes"
+                  className="epm-input"
+                  value={
+                    form.tiene_tatuajes === true
+                      ? "true"
+                      : form.tiene_tatuajes === false
+                      ? "false"
+                      : ""
+                  }
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      tiene_tatuajes: e.target.value === "true",
+                    }))
+                  }
+                >
+                  <option value="">Seleccione una opción</option>
+                  <option value="true">Sí</option>
+                  <option value="false">No</option>
+                </select>
+              </div>
             </div>
           </div>
-
         </div>
 
         {/* BOTONES */}
@@ -294,5 +325,4 @@ function EditPatientModal({
     document.body
   );
 }
-
 export default EditPatientModal;
