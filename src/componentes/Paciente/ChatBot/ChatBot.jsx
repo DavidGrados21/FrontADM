@@ -4,8 +4,13 @@ import "./ChatBot.css";
 
 const ChatBot = () => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  const [messages, setMessages] = useState([
+  {
+    type: "bot",
+    text: "¡Hola! 👋 Soy SITEC, tu asistente virtual. ¿En qué puedo ayudarte hoy?",
+  },]);
 
   const handleSend = async () => {
     if (!message.trim() || loading) return;
@@ -65,11 +70,6 @@ const ChatBot = () => {
       </header>
 
       <div className="chatbot-body">
-        {messages.length === 0 && (
-          <div className="chatbot-empty">
-          </div>
-        )}
-
         {messages.map((msg, index) => (
           <div
             key={index}
