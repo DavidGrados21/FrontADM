@@ -1,21 +1,29 @@
 import { useState } from "react"
 import VistaPersonal from "../Personal/VistaPersonal/VistaPersonal"
+import ChatBot from "../Paciente/ChatBot/ChatBot"
 import Login from "../Personal/Login/Login"
 import "./principal.css"
 
 export default function Principal() {
 
-  const [enter, setEnter] = useState(false)
+  const [vista, setVista] = useState(false)
 
-  if (enter) {
-    return <Login />
+  if (vista === "trabajador") {
+    return <VistaPersonal />;
+  }
+
+  if (vista === "paciente") {
+    return <ChatBot />;
   }
 
   return (
     <div className="principal-container">
 
       <div className="principal-lado principal-blanco">
-        <button className="principal-btn principal-paciente">
+        <button 
+          className="principal-btn principal-paciente"
+          onClick={() => setVista("paciente")}>
+
           Soy Paciente
         </button>
       </div>
@@ -23,7 +31,7 @@ export default function Principal() {
       <div className="principal-lado principal-celeste">
         <button
           className="principal-btn principal-trabajador"
-          onClick={() => setEnter(true)}
+          onClick={() => setVista("trabajador")}
         >
           Soy Trabajador
         </button>
