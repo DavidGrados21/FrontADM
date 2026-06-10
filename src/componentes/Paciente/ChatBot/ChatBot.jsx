@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { api } from "../../../api/api";
 import "./ChatBot.css";
+import VistaPersonal from "../../Personal/VistaPersonal/VistaPersonal";
 
 const ChatBot = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  
+  const [vista, setVista] = useState(null);
+
   const [messages, setMessages] = useState([
   {
     type: "bot",
     text: "¡Hola! 👋 Soy SITEC, tu asistente virtual. ¿En qué puedo ayudarte hoy?",
-  },]);
+  },
+]);
+
+  if (vista === "trabajador") {
+    return <VistaPersonal />;
+  }
+  
 
   const handleSend = async () => {
     if (!message.trim() || loading) return;
@@ -67,6 +75,10 @@ const ChatBot = () => {
           <h2>SITEC</h2>
           <span>Asistente Virtual</span>
         </div>
+
+        <button onClick={() => setVista("trabajador")}>
+          Soy Trabajador
+        </button>
       </header>
 
       <div className="chatbot-body">

@@ -1,7 +1,7 @@
-import Principal from "./componentes/principal/principal";
+import ChatBot from "./componentes/Paciente/ChatBot/ChatBot"
 
 function App() {
-  return <Principal />;
+  return <ChatBot />;
 }
 
 export default App;
