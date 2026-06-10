@@ -1,6 +1,7 @@
 import { useState } from "react"
 import VistaPersonal from "../Personal/VistaPersonal/VistaPersonal"
 import ChatBot from "../Paciente/ChatBot/ChatBot"
+import Login from "../Personal/Login/Login"
 import "./principal.css"
 
 export default function Principal() {
@@ -8,7 +9,7 @@ export default function Principal() {
   const [vista, setVista] = useState(null);
 
   if (vista === "trabajador") {
-    return <VistaPersonal />;
+    return <Login />;
   }
 
   if (vista === "paciente") {

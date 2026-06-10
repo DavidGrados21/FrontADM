@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { api } from "../../../api/api";
 import "./ChatBot.css";
-import VistaPersonal from "../../Personal/VistaPersonal/VistaPersonal";
+import Login from "../../Personal/Login/Login";
 
 const ChatBot = () => {
   const [message, setMessage] = useState("");
@@ -16,7 +16,7 @@ const ChatBot = () => {
 ]);
 
   if (vista === "trabajador") {
-    return <VistaPersonal />;
+    return <Login />;
   }
   
 
