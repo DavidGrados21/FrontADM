@@ -9,6 +9,7 @@ export default function ModalPaciente({
 }) {
 
   const [form, setForm] = useState({
+    tipoDocumento: "dni",
     dni: "",
     nombre: "",
     sexo: "",
@@ -29,6 +30,7 @@ export default function ModalPaciente({
     if (!isOpen) {
 
       setForm({
+        tipoDocumento: "dni",
         dni: "",
         nombre: "",
         sexo: "M",
@@ -71,36 +73,49 @@ export default function ModalPaciente({
   // =========================
   // CONSULTAR DNI
   // =========================
-  const consultarDni = async () => {
+  const consultarDocumento  = async () => {
 
-    const dni = form.dni.trim();
+    const documento  = form.dni.trim();
 
     // VALIDAR DNI
-    if (!/^\d{8}$/.test(dni)) {
+    if (form.tipoDocumento === "dni") {
+      if (!/^\d{8}$/.test(documento)) {
 
-      setErrors({
-        ...errors,
-        dni:
-          "DNI debe tener 8 dígitos numéricos",
-      });
+        setErrors({
+          ...errors,
+          dni: "DNI debe tener 8 dígitos numéricos",
+        });
 
-      return;
+        return;
+      }
+    } else {
+
+      if (!/^\d{1,9}$/.test(documento)) {
+
+        setErrors({
+          ...errors,
+          dni: "CEE inválido",
+        });
+
+        return;
+      }
     }
 
     try {
 
       setLoadingDni(true);
 
-      // LIMPIAR ERRORES
       setErrors({
         dni: "",
         nombre: "",
       });
 
-      const response = await api.get(
-        `/consultar-dni/${dni}`
-      );
+      const endpoint =
+        form.tipoDocumento === "dni"
+          ? `/consultar-dni/${documento}`
+          : `/consultar-cee/${documento}`;
 
+      const response = await api.get(endpoint);
       const data = response.data;
 
       console.log(data);
@@ -130,7 +145,7 @@ export default function ModalPaciente({
       console.log(error);
 
       setErrors({
-        nombre: "Error al consultar DNI",
+        nombre: `Error al consultar ${form.tipoDocumento.toUpperCase()}`,
       });
 
     } finally {
@@ -151,10 +166,18 @@ export default function ModalPaciente({
     const nombre =
       form.nombre.trim();
 
-    if (!/^\d{8}$/.test(dni)) {
+    if (form.tipoDocumento === "dni") {
 
-      newErrors.dni =
-        "DNI debe tener 8 dígitos numéricos";
+      if (!/^\d{8}$/.test(dni)) {
+        newErrors.dni = "DNI debe tener 8 dígitos numéricos";
+      }
+
+    } else {
+
+      if (!/^\d{1,9}$/.test(dni)) {
+        newErrors.dni = "CEE inválido";
+      }
+
     }
 
     if (nombre.length < 3) {
@@ -235,15 +258,36 @@ export default function ModalPaciente({
 
         <h3>Nuevo Paciente</h3>
 
-        {/* DNI */}
-        <input
-          name="dni"
-          placeholder="DNI"
-          value={form.dni}
-          onChange={handleChange}
-          maxLength={8}
-          inputMode="numeric"
-        />
+        {/* DOCUMENTO */}
+        <div className="documento-row">
+
+          <select
+            name="tipoDocumento"
+            value={form.tipoDocumento}
+            onChange={handleChange}
+          >
+            <option value="dni">DNI</option>
+            <option value="cee">CEE</option>
+          </select>
+
+          <input
+            name="dni"
+            placeholder={
+              form.tipoDocumento === "dni"
+                ? "DNI"
+                : "Carné de Extranjería"
+            }
+            value={form.dni}
+            onChange={handleChange}
+            maxLength={
+              form.tipoDocumento === "dni"
+                ? 8
+                : 9
+            }
+            inputMode="numeric"
+          />
+
+        </div>
 
         {errors.dni && (
           <small className="modal-paciente-error">
@@ -254,12 +298,12 @@ export default function ModalPaciente({
         {/* BOTÓN CONSULTAR */}
         <button
           className="modal-paciente-btn-search"
-          onClick={consultarDni}
+          onClick={consultarDocumento}
           disabled={loadingDni}
         >
           {loadingDni
             ? "Consultando..."
-            : "Consultar DNI"}
+            : "Consultar"}
         </button>
 
         {/* NOMBRE */}
