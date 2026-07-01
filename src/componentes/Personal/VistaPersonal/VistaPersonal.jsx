@@ -15,30 +15,37 @@ export default function VistaPersonal({ idDoctor }) {
   return (
     <div className="app-container">
 
-      <Sidebar setView={setView} idDoctor={idDoctor} />
+      {view !== "dashboard" && (
+        <>
+          <Sidebar setView={setView} idDoctor={idDoctor} />
+
+          <FloatingButton
+            onClick={() => setOpenPacienteModal(true)}
+          />
+        </>
+      )}
 
       <main className="content-area">
-        {view === "patients" && 
+        {view === "patients" &&
           (idDoctor === 0 ? (
-            <ColaPacientesPrincipal />
+            <ColaPacientesPrincipal reload={reload} />
           ) : (
-            <ColaPacientesDoctor idDoctor={idDoctor} />
-        ))}
+            <ColaPacientesDoctor
+              idDoctor={idDoctor}
+              reload={reload}
+            />
+          ))}
 
-        {view === "dashboard" && idDoctor === 0 && <Dashboard/>}
+        {view === "dashboard" && idDoctor === 0 && <Dashboard />}
 
         {view === "paciente" && idDoctor === 0 && <Pacientes />}
-
       </main>
-
-      <FloatingButton onClick={() => setOpenPacienteModal(true)} />
 
       <ModalPaciente
         isOpen={openPacienteModal}
         onClose={() => setOpenPacienteModal(false)}
         onSave={() => setReload((prev) => prev + 1)}
       />
-
     </div>
   );
 }
