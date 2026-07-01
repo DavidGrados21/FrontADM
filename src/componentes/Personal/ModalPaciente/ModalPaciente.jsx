@@ -160,22 +160,21 @@ export default function ModalPaciente({
   const validar = () => {
 
     const newErrors = {};
-
-    const dni = form.dni.trim();
-
-    const nombre =
-      form.nombre.trim();
-
+    const documento  = form.dni.trim();
+    const nombre = form.nombre.trim();
+    
     if (form.tipoDocumento === "dni") {
 
-      if (!/^\d{8}$/.test(dni)) {
-        newErrors.dni = "DNI debe tener 8 dígitos numéricos";
+      if (!/^\d{8}$/.test(documento)) {
+        newErrors.dni =
+          "DNI debe tener 8 dígitos numéricos";
       }
 
     } else {
 
-      if (!/^\d{1,9}$/.test(dni)) {
-        newErrors.dni = "CEE inválido";
+      if (!/^\d{1,9}$/.test(documento)) {
+        newErrors.dni =
+          "CEE inválido";
       }
 
     }
@@ -183,7 +182,7 @@ export default function ModalPaciente({
     if (nombre.length < 3) {
 
       newErrors.nombre =
-        "Debe consultar el DNI";
+        "Debe consultar el documento";
     }
 
     if (!form.fecha_nacimiento) {
@@ -232,6 +231,7 @@ export default function ModalPaciente({
         fecha_nacimiento:
           fechaFormateada,
         origen : form.origen,
+        id_especialidad: 0
       });
 
       onSave();
@@ -289,12 +289,6 @@ export default function ModalPaciente({
 
         </div>
 
-        {errors.dni && (
-          <small className="modal-paciente-error">
-            {errors.dni}
-          </small>
-        )}
-
         {/* BOTÓN CONSULTAR */}
         <button
           className="modal-paciente-btn-search"
@@ -303,7 +297,7 @@ export default function ModalPaciente({
         >
           {loadingDni
             ? "Consultando..."
-            : "Consultar"}
+            : "Consultar "}
         </button>
 
         {/* NOMBRE */}

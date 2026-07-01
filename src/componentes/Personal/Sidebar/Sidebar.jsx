@@ -47,7 +47,7 @@ export default function Sidebar({ setView , idDoctor }){
               <button
                 className="sidebar-btn"
                 onClick={() => {
-                  setView("dashboard");
+                  setView("paciente")
                   setOpen(false);
                 }}
               >
